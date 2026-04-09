@@ -3,9 +3,23 @@
 
 Đừng dài dòng, chỉ cần trả lời 3 câu:
 
-App làm gì?
-Ai dùng?
-Tại sao cần nó?
+- App làm gì?
+  App này sẽ giải quyết 3 vấn đề chính của Team Support Gokasa,
+  vấn đề 1: (Giá các sản phẩm của công ty)
+  Đối với những người không nhớ giá sản phẩm, app này sẽ giúp họ có thể check giá sản phẩm của công ty 1 cách nhanh chóng, tiện lợi mà không cần mở file excel.
+  Ngoài ra người dùng cũng có thể xoá các sản phẩm cũ, thêm sản phẩm mới, update khi có thay đổi về giá sản phẩm
+
+  vấn đề 2: (Giao máy cho khách)
+  Đối với các khách hàng đặt máy trước/ đã thanh toán tuy nhiên lấy máy sau. Nhân viên công ty sẽ hay quên hoặc không nhớ là máy nào khách nào, đơn hàng của khách có những đồ gì. Phầm mềm này sẽ giúp người dùng nhớ bộ máy sẽ giao cho khách bao gồm những gì. Có thu tiền hay không và tổng tiền bao nhiêu
+
+  vấn đề 3: (Quản lý các sản phẩm đã cho khách mượn)
+  Đối với các thiết bị cho khách mượn, đôi khi nhân viên sẽ không nhớ ai mượn hay cho mượn cái gì. Phầm mềm này sẽ giúp nhân viên quản lý (add/delete) thiết bị cho khách mượn
+
+  vấn đề 4: (Quản lý các máy đang sửa và đang trong bảo hành)
+  Phần mềm sẽ giúp người dùng quản lý các thiết bị đang sửa và đang trong bảo hành
+
+  vấn đề 5: (Giành cho các khách thích lấy hoá đơn mua hàng hoặc hoá đơn gia hạn bảo hành)
+  Phần mềm này sẽ in ra giấy A4 biên lai nhận tiền
 
 👉 Với project của bạn:
 

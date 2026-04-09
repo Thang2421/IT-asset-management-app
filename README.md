@@ -4,7 +4,6 @@
 
 Devices management App:
 
-- danh sách giá
 - Price list
 - Borrowed devices
 - Devices under repair
