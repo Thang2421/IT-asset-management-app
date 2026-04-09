@@ -10,10 +10,33 @@ Devices management App:
 
 ## 🎯 Features
 
-- Add / Edit / Delete devices
-- Manage borrowed devices
-- Manage devices under repair
-- Save data localy using localStorage
+### 1. Product Price Management
+
+- Quickly check product prices without opening Excel files
+- Add / Edit / Delete products
+- Update prices when changes occur
+
+### 2. Customer Orders (Reserved / Paid Devices)
+
+- Track devices prepared for customers
+- Store order details (items, total price, payment status)
+- Avoid missing or mixing up customer orders
+
+### 3. Borrowed Device Management
+
+- Track which customer borrowed which device
+- Add / Delete borrowed items
+- Avoid losing track of company assets
+
+### 4. Repair & Warranty Tracking
+
+- Manage devices under repair or warranty
+- Track status and issues of each device
+
+### 5. Invoice Generation
+
+- Generate printable A4 invoices
+- Support payment receipts and warranty extensions
 
 ## 🛠 Tech Stack
 
