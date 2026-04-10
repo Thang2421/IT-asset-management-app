@@ -4,7 +4,7 @@
 Đừng dài dòng, chỉ cần trả lời 3 câu:
 
 - App làm gì?
-  App này sẽ giải quyết 3 vấn đề chính của Team Support Gokasa,
+  App này sẽ giải quyết 5 vấn đề chính của Team Support Gokasa,
   vấn đề 1: (Giá các sản phẩm của công ty)
   Đối với những người không nhớ giá sản phẩm, app này sẽ giúp họ có thể check giá sản phẩm của công ty 1 cách nhanh chóng, tiện lợi mà không cần mở file excel.
   Ngoài ra người dùng cũng có thể xoá các sản phẩm cũ, thêm sản phẩm mới, update khi có thay đổi về giá sản phẩm
@@ -27,27 +27,8 @@ App quản lý thiết bị (giá, mượn, hỏng) cho công ty nhỏ
 
 ✏️ 2. Vẽ UI (CÓ – nhưng làm nhanh)
 
-👉 Không cần đẹp, chỉ cần hiểu flow
+FIGMA link: https://www.figma.com/design/fDm0vgchtmk5pFABOPejMx/IT_asset_management_app?node-id=0-1&p=f
 
-Bạn có thể:
-
-vẽ giấy (nhanh nhất)
-hoặc dùng Figma (nếu muốn xịn hơn)
-
-👉 Bạn nên vẽ:
-
-3 tab:
-Price List
-Borrowed
-Broken
-mỗi tab:
-table
-nút Add / Edit / Delete
-
-👉 Mục tiêu thật:
-
-biết cần component gì
-tránh code lung tung
 🧩 3. Chia nhỏ task (ĐÂY là bước quan trọng nhất)
 
 Sai lầm phổ biến: code tất cả cùng lúc ❌
@@ -196,3 +177,100 @@ Deploy
 Đừng xem tutorial quá nhiều → dễ bị phụ thuộc
 Đừng cố “làm xịn ngay” → dễ bỏ cuộc
 Làm xong từng phase nhỏ → có cảm giác tiến bộ
+
+///////////// Plan update /////////////////////////
+
+🔥 Nguyên tắc trước khi chia task
+mỗi task = làm trong 1–2 giờ
+xong 1 task → chạy được ngay
+không nhảy bước
+🚀 Phase 0 – Setup (đừng bỏ qua)
+Task 0.1
+tạo folder project
+Task 0.2
+tạo file:
+index.html
+style.css
+app.js
+Task 0.3
+setup layout basic:
+sidebar + main content
+
+👉 Chưa cần đẹp
+
+🚀 Phase 1 – Orders (CORE, làm cái này trước)
+🎯 Mục tiêu:
+
+👉 hiển thị + thêm + xoá order
+
+Task 1.1 – Hardcode data
+const orders = [
+{
+id: 1,
+customer: "John",
+device: "Dell XPS",
+status: "borrowing"
+}
+];
+Task 1.2 – Render list ra UI
+
+👉 Bạn làm:
+
+loop qua orders
+render ra HTML
+Task 1.3 – Tạo UI form (chưa cần logic)
+
+👉 chỉ cần:
+
+input customer
+input device
+button Add
+Task 1.4 – Add order
+
+👉 khi submit:
+
+push vào array
+render lại
+Task 1.5 – Delete order
+
+👉 mỗi item có nút delete
+
+Task 1.6 – (OPTIONAL nhưng nên làm) Edit
+🚀 Phase 2 – LocalStorage
+Task 2.1
+load data từ localStorage khi mở app
+Task 2.2
+save mỗi khi add/delete
+🚀 Phase 3 – UI improve nhẹ
+Task 3.1
+hiển thị status (badge)
+Task 3.2
+confirm khi delete
+🚀 Phase 4 – Reusable form (áp dụng cái mình nói)
+
+👉 refactor lại form:
+
+dùng function renderForm
+🚀 Phase 5 – Borrowed
+
+👉 copy logic từ Orders → chỉnh nhẹ
+
+🚀 Phase 6 – Repair
+🚀 Phase 7 – Invoice
+🧠 Cách làm đúng (rất quan trọng)
+
+👉 Bạn code theo loop này:
+
+Code xong 1 task
+Test ngay
+Commit
+Ví dụ commit chuẩn:
+git commit -m "feat: render orders list"
+git commit -m "feat: add new order"
+git commit -m "feat: delete order"
+⚠️ Những lỗi bạn phải tránh
+
+❌ Viết hết rồi mới test
+❌ Code nhiều module cùng lúc
+❌ Fix UI quá sớm
+❌ Không commit

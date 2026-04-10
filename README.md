@@ -47,3 +47,7 @@ Devices management App:
 ## 🚀 Deployment
 
 (deploy link)
+
+## UI Design
+
+FIGMA link: https://www.figma.com/design/fDm0vgchtmk5pFABOPejMx/IT_asset_management_app?node-id=0-1&t=nut5hvgvrpTYgInu-1
