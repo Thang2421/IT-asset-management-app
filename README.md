@@ -46,7 +46,7 @@ Devices management App:
 
 ## 🚀 Deployment
 
-(deploy link)
+(deploy Link)
 
 ## UI Design
 

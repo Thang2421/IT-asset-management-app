@@ -214,7 +214,7 @@ status: "borrowing"
 ];
 Task 1.2 – Render list ra UI
 
-👉 Bạn làm:
+👉 Bạn làm
 
 loop qua orders
 render ra HTML
