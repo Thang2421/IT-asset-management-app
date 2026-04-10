@@ -1,0 +1,68 @@
+body {
+  font-family: "Anonymous Pro", monospace;
+
+  background-color: #f5f5f5;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+img {
+  width: 500px;
+  height: auto;
+}
+
+button {
+  font-weight: bold;
+}
+
+.copyright {
+  position: fixed;
+  bottom: 0px;
+  right: 10px;
+  font-size: 25px;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+.sidebar {
+  background-color: #d9d9d9;
+  width: 200px;
+}
+
+.main {
+  flex: 1;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  height: 100px;
+  width: 100px;
+}
+
+.icon:hover {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
