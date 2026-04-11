@@ -90,6 +90,35 @@ button {
   align-items: center;
 }
 
+.form {
+  position: fixed;
+  display: grid;
+  grid-template-rows: 100px 1fr 1fr;
+  width: 70%;
+  height: 70%;
+  top: 10%;
+  left: 15%;
+  border-style: dotted;
+  border-radius: 10px;
+}
+
+.modal-form {
+}
+
+.top {
+  background-color: red;
+  justify-content: center;
+  text-align: center;
+}
+
+.list {
+  background-color: yellow;
+}
+
+.actions {
+  background-color: aqua;
+}
+
 .hidden {
   display: none;
 }

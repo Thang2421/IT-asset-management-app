@@ -10,7 +10,7 @@ const pages = [
 const main = document.querySelector(".main");
 
 // Login Page Listent for Login Btn
-loginBtn.addEventListener("click", function (e) {
+loginBtn.addEventListener("click", function () {
   document.querySelector(".login-page").classList.add("hidden");
 
   document.querySelector(".app").classList.remove("hidden");
@@ -31,7 +31,7 @@ const renderSidebar = () => {
   sideBar.innerHTML = html;
 };
 
-// Main Page listen for menu-item, Opacy corespoding to selcted menu -tem
+// Main Page listen for menu-item, Opacy corespoding to selcted menu-item
 sideBar.addEventListener("click", function (e) {
   if (!e.target.classList.contains("icon")) return;
 
@@ -44,8 +44,8 @@ sideBar.addEventListener("click", function (e) {
   renderPage(page);
 });
 
+// Render the main page
 function renderPage(page) {
-  console.log(page);
   let html;
   if (page === "orders") {
     html = `
@@ -75,7 +75,15 @@ function renderPage(page) {
     <div>
     `;
   }
-
   main.innerHTML = html;
+
+  const addBtn = document.querySelector(".add-btn-img");
+
+  addBtn.addEventListener("click", renderModal);
 }
-/// dummy text
+
+function renderModal() {
+  console.log(document.body);
+  modalHtml = `<div class="modal"></div>`;
+  document.body.insertAdjacentHTML("afterbegin", modalHtml);
+}
