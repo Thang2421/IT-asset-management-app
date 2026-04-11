@@ -8,6 +8,7 @@ const pages = [
   "invoice",
 ];
 
+// Login Page Listent for Login Btn
 loginBtn.addEventListener("click", function (e) {
   document.querySelector(".login-page").classList.add("hidden");
 
@@ -15,15 +16,27 @@ loginBtn.addEventListener("click", function (e) {
   renderSidebar();
 });
 
+// Sidebar Rendering
 const renderSidebar = () => {
   const html = pages
     .map((page) => {
       return `
-      <div class="menu-item ${page}">
-      <img class="icon" src="IMG/menu-items/${page}.png" />
-      </div>`;
+        <div class="menu-item ">
+        <img class="icon ${page}" src="IMG/menu-items/${page}.png" />
+        </div>`;
     })
     .join("");
 
   sideBar.innerHTML = html;
 };
+
+// Main Page listen for menu-item
+sideBar.addEventListener("click", function (e) {
+  if (!e.target.classList.contains("icon")) return;
+
+  const allMenuItem = document.querySelectorAll(".menu-item").forEach((el) => {
+    el.classList.remove("active");
+  });
+
+  e.target.closest("div").classList.add("active");
+});

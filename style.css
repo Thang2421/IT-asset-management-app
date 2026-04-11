@@ -52,15 +52,20 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0.2;
 }
 
 .icon {
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
 }
 
 .icon:hover {
   cursor: pointer;
+}
+
+.active {
+  opacity: 1;
 }
 
 .hidden {
