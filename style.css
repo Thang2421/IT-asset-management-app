@@ -53,6 +53,7 @@ button {
   justify-content: center;
   align-items: center;
   opacity: 0.2;
+  transition: 0.2s;
 }
 
 .icon {
@@ -66,6 +67,27 @@ button {
 
 .active {
   opacity: 1;
+}
+.main-header {
+  display: grid;
+  grid-template-columns: auto 100px;
+}
+
+.add-btn-img {
+  width: 60px;
+}
+.add-btn-img:hover {
+  cursor: pointer;
+}
+
+.page-header {
+  text-align: center;
+}
+
+.add-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hidden {
