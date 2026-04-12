@@ -90,33 +90,39 @@ button {
   align-items: center;
 }
 
+/* form */
+
 .form {
   position: fixed;
   display: grid;
-  grid-template-rows: 100px 1fr 1fr;
-  width: 70%;
-  height: 70%;
-  top: 10%;
-  left: 15%;
+  grid-template-rows: 100px auto;
+  width: 50%;
+  height: auto;
+  top: 25%;
+  left: 25%;
   border-style: dotted;
   border-radius: 10px;
 }
 
-.modal-form {
-}
-
-.top {
+.form-top {
   background-color: red;
+  display: flex;
   justify-content: center;
-  text-align: center;
+  align-items: center;
 }
 
-.list {
+.form-body {
   background-color: yellow;
 }
 
-.actions {
-  background-color: aqua;
+.modal-form-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.modal-form-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hidden {

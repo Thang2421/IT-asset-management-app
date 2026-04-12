@@ -9,6 +9,12 @@ const pages = [
 ];
 const main = document.querySelector(".main");
 
+const mainData = {
+  order: [],
+  borrow: [],
+  repair: [],
+};
+
 // Login Page Listent for Login Btn
 loginBtn.addEventListener("click", function () {
   document.querySelector(".login-page").classList.add("hidden");
@@ -83,7 +89,105 @@ function renderPage(page) {
 }
 
 function renderModal() {
-  console.log(document.body);
-  modalHtml = `<div class="modal"></div>`;
-  document.body.insertAdjacentHTML("afterbegin", modalHtml);
+  modalhtml = `
+    <div class="form">
+      <!-- TOP -->
+      <div class="form-top">
+        <h1>New Order Info</h1>
+      </div>
+      <!-- MIDDLE -->
+      <div class="form-body">
+        <form class="modal-form">
+          <div class="modal-form-body">
+            <div class="modal-form-body-left">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" type="text" />
+              </div>
+
+              <div class="form-group">
+                <label for="ico">ICO</label>
+                <input id="ico" type="text" />
+              </div>
+
+              <div class="form-group">
+                <label for="tel">Tel</label>
+                <input id="tel" type="number" />
+              </div>
+              <div class="form-group">
+                <label>Status</label>
+
+                <label>
+                  <input type="radio" name="order_status" value="paid" />
+                  PAID
+                </label>
+
+                <label>
+                  <input type="radio" name="order_status" value="unpaid" />
+                  UNPAID
+                </label>
+              </div>
+            </div>
+            <div class="modal-form-body-right">
+              <div class="form-group">
+                <label for="device">Device</label>
+                <select id="device">
+                  <option value="">Select device</option>
+                  <option value="c660">C660</option>
+                  <option value="p70-1">P70-1</option>
+                  <option value="p70-2">P70-2</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="location">Location</label>
+                <select id="location">
+                  <option value="">Select location</option>
+                  <option value="ground-f">Ground floor</option>
+                  <option value="2nd-f">Second floor</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="comments">Comments</label>
+                <textarea id="comments"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-form-submit">
+            <button type="submit">Submit</button>
+          </div>
+        </form>`;
+  document.body.insertAdjacentHTML("afterbegin", modalhtml);
+  const form = document.querySelector(".modal-form");
+
+  form.addEventListener("submit", processData);
+}
+
+function processData(e) {
+  e.preventDefault();
+  const name = document.querySelector("#name").value;
+  const ico = document.querySelector("#ico").value;
+  const tel = document.querySelector("#tel").value;
+  const device = document.querySelector("#device").value;
+  const status = document.querySelector(
+    'input[name="order_status"]:checked',
+  )?.value;
+  const location = document.querySelector("#location").value;
+  const comment = document.querySelector("#comments").value;
+
+  const dataFormValue = {
+    name: name,
+    ico: ico,
+    tel: tel,
+    device: device,
+    status: status,
+    location: location,
+    comment: comment,
+  };
+  console.log(mainData.order);
+
+  mainData.order.push(dataFormValue);
+  console.log(mainData.order);
 }
