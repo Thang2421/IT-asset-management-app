@@ -48,6 +48,7 @@ sideBar.addEventListener("click", function (e) {
   e.target.closest("div").classList.add("active");
   const page = e.target.dataset.page;
   renderPage(page);
+  renderMainOrder();
 });
 
 // Render the main page
@@ -56,40 +57,44 @@ function renderPage(page) {
   if (page === "orders") {
     html = `
     <div class='main-header'>
-    <h1 class='page-header'>Customer Orders (Reserved/ Paid Devices)</h1>
-    <div class = 'add-btn-container'>
-        <img class="add-btn-img"  src="IMG/add.png" />
+        <h1 class='page-header'>Customer Orders (Reserved/ Paid Devices)</h1>
+        <div class = 'add-btn-container'>
+            <img class="add-btn-img"  src="IMG/add.png" />
+        </div>
     </div>
-    <div>
+    <div class="main-body"></div>
     `;
   } else if (page === "borrow-devices") {
     html = `
     <div class='main-header'>
-    <h1 class='page-header'>Borrowed Device Management</h1>
-    <div class = 'add-btn-container'>
-        <img class="add-btn-img"  src="IMG/add.png" />
+        <h1 class='page-header'>Borrowed Device Management</h1>
+        <div class = 'add-btn-container'>
+            <img class="add-btn-img"  src="IMG/add.png" />
+        </div>
     </div>
-    <div>
+    <div class="main-body"></div>
     `;
   } else if (page === "repair-tracking") {
     html = `
     <div class='main-header'>
-    <h1 class='page-header'>Repair & Warranty Tracking</h1>
-    <div class = 'add-btn-container'>
-        <img class="add-btn-img"  src="IMG/add.png" />
+        <h1 class='page-header'>Repair & Warranty Tracking</h1>
+        <div class = 'add-btn-container'>
+            <img class="add-btn-img"  src="IMG/add.png" />
+        </div>
     </div>
-    <div>
+    <div class="main-body"></div>
+
     `;
   }
   main.innerHTML = html;
 
   const addBtn = document.querySelector(".add-btn-img");
 
-  addBtn.addEventListener("click", renderModal);
+  addBtn.addEventListener("click", renderForm);
 }
 
-function renderModal() {
-  modalhtml = `
+function renderForm() {
+  formhtml = `
     <div class="form">
       <!-- TOP -->
       <div class="form-top">
@@ -159,13 +164,13 @@ function renderModal() {
             <button type="submit">Submit</button>
           </div>
         </form>`;
-  document.body.insertAdjacentHTML("afterbegin", modalhtml);
+  document.body.insertAdjacentHTML("afterbegin", formhtml);
   const form = document.querySelector(".modal-form");
 
-  form.addEventListener("submit", processData);
+  form.addEventListener("submit", formSubmission);
 }
 
-function processData(e) {
+function formSubmission(e) {
   e.preventDefault();
   const name = document.querySelector("#name").value;
   const ico = document.querySelector("#ico").value;
@@ -178,6 +183,7 @@ function processData(e) {
   const comment = document.querySelector("#comments").value;
 
   const dataFormValue = {
+    date: new Date().toLocaleString("en-US"),
     name: name,
     ico: ico,
     tel: tel,
@@ -186,8 +192,23 @@ function processData(e) {
     location: location,
     comment: comment,
   };
-  console.log(mainData.order);
+
+  if (!ico || !device || !status) {
+    alert("Please fill required fields");
+    return;
+  }
 
   mainData.order.push(dataFormValue);
-  console.log(mainData.order);
+
+  const form = document.querySelector(".form");
+  form.remove();
+
+  renderMainOrder();
+}
+
+function renderMainOrder() {
+  console.log(2);
+  mainData.order.map((order) => {
+    console.log(order);
+  });
 }
