@@ -48,7 +48,6 @@ sideBar.addEventListener("click", function (e) {
   e.target.closest("div").classList.add("active");
   const page = e.target.dataset.page;
   renderPage(page);
-  renderMainOrder();
 });
 
 // Render the main page
@@ -183,7 +182,8 @@ function formSubmission(e) {
   const comment = document.querySelector("#comments").value;
 
   const dataFormValue = {
-    date: new Date().toLocaleString("en-US"),
+    id: Date.now(),
+    date: new Date().toLocaleString("cz-CZ"),
     name: name,
     ico: ico,
     tel: tel,
@@ -207,8 +207,124 @@ function formSubmission(e) {
 }
 
 function renderMainOrder() {
-  console.log(2);
-  mainData.order.map((order) => {
-    console.log(order);
-  });
+  const mainBody = document.querySelector(".main-body");
+
+  const html = mainData.order
+    .map((order) => {
+      console.log(order.date);
+      return `
+    <div class="main-body-data">
+        <div class="box" id='${order.id}'>
+            <div class="box-order-status"></div>
+            <div class="box-order-data">
+                <h1>Name: ${order.name}</h1>
+                <h1>ICO: ${order.ico}</h1>
+                <h1>Tel: ${order.tel}</h1>
+            </div>
+        </div>
+        <h2>Created on: ${order.date.slice(9)}</h2>
+    </div>`;
+    })
+    .join(" ");
+
+  mainBody.innerHTML = html;
+
+  //   const { name, ico, tel } = mainData.order[0];
+  //   mainBody.innerHTML = `          <div class="main-body-data">
+  //             <div class="box">
+  //               <div class="box-order-status"></div>
+  //               <div class="box-order-data">
+  //                 <h1>Name: ${name}</h1>
+  //                 <h1>ICO: ${ico}</h1>
+  //                 <h1>Tel: ${tel}</h1>
+  //               </div>
+  //             </div>
+  //             <h2>Date: 20.04.2024</h2>
+  //           </div>`;
 }
+
+const mainBody = document.querySelector(".main");
+
+mainBody.addEventListener("click", function (ev) {
+  const box = ev.target.closest(".box");
+  if (!box) return;
+
+  const chosenDataIndex = mainData.order.findIndex(function checkingId(data) {
+    return data.id === +box.id;
+  });
+  console.log(chosenDataIndex);
+  if (chosenDataIndex === -1) return;
+
+  formhtml = `
+    <div class="form">
+      <!-- TOP -->
+      <div class="form-top">
+        <h1>New Order Info</h1>
+      </div>
+      <!-- MIDDLE -->
+      <div class="form-body">
+        <form class="modal-form">
+          <div class="modal-form-body">
+            <div class="modal-form-body-left">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" type="text" value='${mainData.order[chosenDataIndex].name}' />
+              </div>
+
+              <div class="form-group">
+                <label for="ico">ICO</label>
+                <input id="ico" type="text" value='${mainData.order[chosenDataIndex].ico}' />
+              </div>
+
+              <div class="form-group">
+                <label for="tel">Tel</label>
+                <input id="tel" type="number" value='${mainData.order[chosenDataIndex].tel}' />
+              </div>
+              <div class="form-group">
+                <label>Status</label>
+
+                <label>
+                  <input type="radio" name="order_status" value="paid" />
+                  PAID
+                </label>
+
+                <label>
+                  <input type="radio" name="order_status" value="unpaid" />
+                  UNPAID
+                </label>
+              </div>
+            </div>
+            <div class="modal-form-body-right">
+              <div class="form-group">
+                <label for="device">Device</label>
+                <select id="device">
+                  <option value='${mainData.order[chosenDataIndex].device}' >Select device</option>
+                  <option value="c660">C660</option>
+                  <option value="p70-1">P70-1</option>
+                  <option value="p70-2">P70-2</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="location">Location</label>
+                <select id="location">
+                  <option value='${mainData.order[chosenDataIndex].location}' >Select location</option>
+                  <option value="ground-f">Ground floor</option>
+                  <option value="2nd-f">Second floor</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="comments">Comments</label>
+                <textarea id="comments" value='${mainData.order[chosenDataIndex].comment}' ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-form-submit">
+            <button type="submit">Submit</button>
+          </div>
+        </form>`;
+
+  document.body.insertAdjacentHTML("afterbegin", formhtml);
+});
