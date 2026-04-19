@@ -318,8 +318,8 @@ document.body.addEventListener("click", function (e) {
     return;
   }
 
-  // User choose menu-item
-  if (e.target.classList.contains("icon")) {
+  // User choose Orders menu-item
+  if (e.target.dataset.page === "orders") {
     const chosenMenuItem = e.target;
     renderActiveMenuItem(chosenMenuItem);
     const page = e.target.dataset.page;
@@ -327,13 +327,27 @@ document.body.addEventListener("click", function (e) {
     renderMainOrders();
     return;
   }
-
-  // User choose Orders menu-item
-  console.log(e.target);
-
   // User choose Borrow menu-item
 
+  if (e.target.dataset.page === "borrow-devices") {
+    const chosenMenuItem = e.target;
+    renderActiveMenuItem(chosenMenuItem);
+    const page = e.target.dataset.page;
+    renderPage(page);
+
+    console.log("borrow page");
+  }
+
   // User choose Repair menu-item
+
+  if (e.target.dataset.page === "repair-tracking") {
+    const chosenMenuItem = e.target;
+    renderActiveMenuItem(chosenMenuItem);
+    const page = e.target.dataset.page;
+    renderPage(page);
+
+    console.log("repair page");
+  }
 
   // User add Main Object
   const addBtn = document.querySelector(".add-btn-img");
