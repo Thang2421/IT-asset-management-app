@@ -121,6 +121,17 @@ button {
 .main-body-data h2 {
   padding-left: 55px;
 }
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(121, 121, 121, 0.5);
+  backdrop-filter: blur(1px);
+  z-index: 100;
+  transition: all 0.5s;
+}
 
 .add-btn-img {
   width: 60px;
@@ -171,6 +182,11 @@ button {
 .modal-form-submit {
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+.btn-container {
+  display: flex;
   justify-content: center;
 }
 

@@ -7,7 +7,30 @@ const pages = [
 ];
 
 const mainData = {
-  orders: [],
+  orders: [
+    {
+      id: 1776633369848,
+      date: "23:16:09 19/4/2026",
+      name: "123",
+      ico: "123",
+      tel: "123",
+      device: "c660",
+      status: "paid",
+      location: "g-floor",
+      comment: "",
+    },
+    {
+      id: 12,
+      date: "23:16:09 19/4/2026",
+      name: "234",
+      ico: "234",
+      tel: "234",
+      device: "c660",
+      status: "unpaid",
+      location: "g-floor",
+      comment: "",
+    },
+  ],
   borrow: [],
   repair: [],
 };
@@ -35,19 +58,6 @@ const renderSidebar = () => {
   sideBar.innerHTML = html;
   // console.log(html);
 };
-
-// Main Page listen for menu-item, Opacy corespoding to selcted menu-item
-// sideBar.addEventListener("click", function (e) {
-//   if (!e.target.classList.contains("icon")) return;
-
-//   const allMenuItem = document.querySelectorAll(".menu-item").forEach((el) => {
-//     el.classList.remove("active");
-//   });
-
-//   e.target.closest("div").classList.add("active");
-//   const page = e.target.dataset.page;
-//   renderPage(page);
-// });
 
 function renderActiveMenuItem(chosenMenuItem) {
   const allMenuItem = document.querySelectorAll(".menu-item").forEach((el) => {
@@ -94,9 +104,6 @@ function renderPage(page) {
     `;
   }
   main.innerHTML = html;
-  // const addBtn = document.querySelector(".add-btn-img");
-
-  // addBtn.addEventListener("click", renderForm);
 }
 
 function getObjDataFromBox(id) {
@@ -106,131 +113,44 @@ function getObjDataFromBox(id) {
   return targetObjectFromOrder;
 }
 
-function renderForm(chosenDataIndex) {
-  let chosenData;
-
-  if (typeof chosenDataIndex === "number") {
-    console.log("update data");
-    console.log(mainData.orders[chosenDataIndex]);
-    mainData.order[chosenDataIndex];
-  }
-
-  const formhtml = `
-    <div class="form">
-      <!-- TOP -->
-      <div class="form-top">
-        <h1>New Order Info</h1>
-      </div>
-      <!-- MIDDLE -->
-      <div class="form-body">
-        <form class="modal-form">
-          <div class="modal-form-body">
-            <div class="modal-form-body-left">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input id="name" type="text" value='${chosenData?.name || ""}'/>
-              </div>
-
-              <div class="form-group">
-                <label for="ico">ICO</label>
-                <input id="ico" type="text" value='${chosenData?.ico || ""}'/>
-              </div>
-
-              <div class="form-group">
-                <label for="tel">Tel</label>
-                <input id="tel" type="number" value='${chosenData?.tel || ""}'/>
-              </div>
-              <div class="form-group">
-                <label>Status</label>
-
-                <label>
-                  <input type="radio" name="order_status" value="paid" />
-                  PAID
-                </label>
-
-                <label>
-                  <input type="radio" name="order_status" value="unpaid" />
-                  UNPAID
-                </label>
-              </div>
-            </div>
-            <div class="modal-form-body-right">
-              <div class="form-group">
-                <label for="device">Device</label>
-                <select id="device">
-                  <option value="">Select device</option>
-                  <option value="c660">C660</option>
-                  <option value="p70-1">P70-1</option>
-                  <option value="p70-2">P70-2</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="location">Location</label>
-                <select id="location">
-                  <option value="">Select location</option>
-                  <option value="ground-f">Ground floor</option>
-                  <option value="2nd-f">Second floor</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="comments">Comments</label>
-                <textarea id="comments">${chosenData?.comment || ""}</textarea>
-              </div>
-            </div>
-          </div>
-
-          <div class="modal-form-submit">
-            <button type="submit">Submit</button>
-          </div>
-        </form>`;
-  document.body.insertAdjacentHTML("afterbegin", formhtml);
-  const form = document.querySelector(".modal-form");
-
-  form.addEventListener("submit", formSubmission);
-}
-
-function updateForm(obj) {
-  let chosenData = obj;
-
+function renderForm(obj) {
   const formhtml = `
     <div class="overlay ">
 
     <div class="form ">
       <!-- TOP -->
       <div class="form-top">
-        <h1>New Order Info</h1>
+      ${obj?.id ? `<h1>Update Order Info</h1>` : `<h1>New Order Info</h1>`}
       </div>
       <!-- MIDDLE -->
       <div class="form-body">
-        <form class="modal-form" data-id='${chosenData?.id || ""}'>
+        <form class="modal-form" data-id='${obj?.id || ""}'>
           <div class="modal-form-body">
             <div class="modal-form-body-left">
               <div class="form-group">
                 <label for="name">Name</label>
-                <input id="name" type="text" value='${chosenData?.name || ""}'/>
+                <input id="name" type="text" value='${obj?.name || ""}'/>
               </div>
 
               <div class="form-group">
                 <label for="ico">ICO</label>
-                <input id="ico" type="text" value='${chosenData?.ico || ""}'/>
+                <input id="ico" type="text" value='${obj?.ico || ""}'/>
               </div>
 
               <div class="form-group">
                 <label for="tel">Tel</label>
-                <input id="tel" type="number" value='${chosenData?.tel || ""}'/>
+                <input id="tel" type="number" value='${obj?.tel || ""}'/>
               </div>
               <div class="form-group">
                 <label>Status</label>
 
                 <label>
-                  <input type="radio" name="order_status" value="paid" ${chosenData?.status === "paid" ? "checked" : ""} />
+                  <input type="radio" name="order_status" value="paid" ${obj?.status === "paid" ? "checked" : ""} />
                   PAID
                 </label>
 
                 <label>
-                  <input type="radio" name="order_status" value="unpaid" ${chosenData?.status === "unpaid" ? "checked" : ""} />
+                  <input type="radio" name="order_status" value="unpaid" ${obj?.status === "unpaid" ? "checked" : ""} />
                   UNPAID
                 </label>
               </div>
@@ -240,44 +160,78 @@ function updateForm(obj) {
                 <label for="device">Device</label>
                 <select id="device">
                   <option value="">Select device</option>
-                  <option value="c660" ${chosenData?.device === "c660" ? "selected" : ""}>C660</option>
-                  <option value="p70-1" ${chosenData?.device === "p70-1" ? "selected" : ""}>P70-1</option>
-                  <option value="p70-2" ${chosenData?.device === "p70-2" ? "selected" : ""}>P70-2</option>
+                  <option value="c660" ${obj?.device === "c660" ? "selected" : ""}>C660</option>
+                  <option value="p70-1" ${obj?.device === "p70-1" ? "selected" : ""}>P70-1</option>
+                  <option value="p70-2" ${obj?.device === "p70-2" ? "selected" : ""}>P70-2</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="location">Location</label>
                 <select id="location">
                   <option value=''>Select locaiton</option>
-                  <option value="g-floor" ${chosenData?.location === "g-floor" ? "selected" : ""}>Ground Floor</option>
-                  <option value="s-floor" ${chosenData?.location === "s-floor" ? "selected" : ""}>Second Floor</option>
+                  <option value="g-floor" ${obj?.location === "g-floor" ? "selected" : ""}>Ground Floor</option>
+                  <option value="s-floor" ${obj?.location === "s-floor" ? "selected" : ""}>Second Floor</option>
                 </select>
               </div>
 
               <div class="form-group">
                 <label for="comments">Comments</label>
-                <textarea id="comments">${chosenData?.comment || ""}</textarea>
+                <textarea id="comments">${obj?.comment || ""}</textarea>
               </div>
             </div>
           </div>
 
-          <div class='btn-container'> 
-          <div class="modal-form-submit">
-            <button class="form-btn update-btn" type="submit">Update</button>
-          </div>
-           <div class="modal-form-submit">
-            <button class="form-btn finish-btn">Finish</button>
-          </div>
-          </div>
+          ${
+            obj?.id
+              ? `<div class='btn-container'> 
+              <div class="modal-form-submit">
+                <button class="form-btn update-btn" type="submit">Update</button>
+               </div>
+              <div class="modal-form-submit">
+                <button class="form-btn finish-btn">Finish</button>
+              </div>
+            </div>`
+              : `<div class="modal-form-submit">
+                <button class="form-btn submit-btn" type="submit">Submit</button>
+             </div>`
+          }
 
-         
+   
         </form>
         </div>`;
+
   document.body.insertAdjacentHTML("afterbegin", formhtml);
 }
 
-function formSubmission(e) {
-  e.preventDefault();
+function removeForm() {
+  const overlay = document.querySelector(".overlay");
+  overlay.remove();
+}
+
+function renderMainOrders() {
+  const mainBody = document.querySelector(".main-body");
+
+  const html = mainData.orders
+    .map((order) => {
+      return `
+    <div class="main-body-data">
+        <div class="box" id='${order.id}'>
+            <div class="box-order-status ${order.status === "paid" ? "paid-background" : "unpaid-background"}"></div>
+            <div class="box-order-data">
+                <h1>Name: ${order.name}</h1>
+                <h1>ICO: ${order.ico}</h1>
+                <h1>Tel: ${order.tel}</h1>
+            </div>
+        </div>
+        <h2>Created on: ${order.date.slice(9)}</h2>
+    </div>`;
+    })
+    .join(" ");
+
+  mainBody.innerHTML = html;
+}
+
+function addMainData() {
   const name = document.querySelector("#name").value;
   const ico = document.querySelector("#ico").value;
   const tel = document.querySelector("#tel").value;
@@ -305,51 +259,43 @@ function formSubmission(e) {
     return;
   }
 
+  console.log(dataFormValue);
+
   // if data object is not exists
   mainData.orders.push(dataFormValue);
 
   const form = document.querySelector(".form");
   form.remove();
-
-  renderMainOrder();
 }
 
-function renderMainOrder() {
-  const mainBody = document.querySelector(".main-body");
+function updateMainData(id) {
+  const objData = getObjDataFromBox(id);
+  const updatedObjData = {
+    id: objData.id,
+    date: objData.date,
+    name: document.querySelector("#name").value,
+    ico: document.querySelector("#ico").value,
+    tel: document.querySelector("#tel").value,
+    device: document.querySelector("#device").value,
+    status: document.querySelector('input[name="order_status"]:checked')?.value,
+    location: document.querySelector("#location").value,
+    comment: document.querySelector("#comments").value,
+  };
 
-  const html = mainData.orders
-    .map((order) => {
-      return `
-    <div class="main-body-data">
-        <div class="box" id='${order.id}'>
-            <div class="box-order-status ${order.status === "paid" ? "paid-background" : "unpaid-background"}"></div>
-            <div class="box-order-data">
-                <h1>Name: ${order.name}</h1>
-                <h1>ICO: ${order.ico}</h1>
-                <h1>Tel: ${order.tel}</h1>
-            </div>
-        </div>
-        <h2>Created on: ${order.date.slice(9)}</h2>
-    </div>`;
-    })
-    .join(" ");
-
-  mainBody.innerHTML = html;
+  const indexData = findIndexFromId(id);
+  mainData.orders[indexData] = updatedObjData;
 }
 
-const mainBody = document.querySelector(".main");
+function deleteMainData(id) {
+  const indexData = findIndexFromId(id);
+  mainData.orders.splice(indexData, 1);
+}
 
-mainBody.addEventListener("click", function (ev) {
-  const box = ev.target.closest(".box");
-  if (!box) return;
-
-  const chosenDataIndex = mainData.orders.findIndex(function checkingId(data) {
-    return data.id === +box.id;
+function findIndexFromId(id) {
+  return mainData.orders.findIndex((order) => {
+    return +order.id == id;
   });
-  if (chosenDataIndex === -1) return;
-
-  renderForm(chosenDataIndex);
-});
+}
 
 function renderMainPageStructure() {
   const mainPageHtml = `
@@ -369,6 +315,7 @@ document.body.addEventListener("click", function (e) {
     loginPage.remove();
     renderMainPageStructure();
     renderSidebar();
+    return;
   }
 
   // User choose menu-item
@@ -377,24 +324,65 @@ document.body.addEventListener("click", function (e) {
     renderActiveMenuItem(chosenMenuItem);
     const page = e.target.dataset.page;
     renderPage(page);
+    renderMainOrders();
+    return;
   }
+
+  // User choose Orders menu-item
+  console.log(e.target);
+
+  // User choose Borrow menu-item
+
+  // User choose Repair menu-item
 
   // User add Main Object
   const addBtn = document.querySelector(".add-btn-img");
   if (e.target === addBtn) {
     renderForm();
+    return;
+  }
+
+  // If overlay were selected
+  const overlay = e.target.closest(".overlay");
+  if (overlay === e.target) {
+    overlay.remove();
+    return;
   }
 
   // If Box were selected
   const box = e.target.closest(".box");
   if (box) {
     const objData = getObjDataFromBox(box.id);
-    console.log(objData);
-    updateForm(objData);
+    renderForm(objData);
+    return;
+  }
+
+  const submitBtn = e.target.closest(".submit-btn");
+  if (e.target === submitBtn) {
+    e.preventDefault();
+    addMainData();
+    removeForm();
+    renderMainOrders();
+    return;
   }
 
   const updateBtn = e.target.closest(".update-btn");
   if (e.target === updateBtn) {
     e.preventDefault();
+    const id = e.target.closest(".modal-form").dataset.id;
+    updateMainData(id);
+    removeForm();
+    renderMainOrders();
+    return;
+  }
+
+  const finishBtn = e.target.closest(".finish-btn");
+  if (e.target === finishBtn) {
+    e.preventDefault();
+    const id = e.target.closest(".modal-form").dataset.id;
+    deleteMainData(id);
+    removeForm();
+    renderMainOrders();
+    return;
   }
 });
