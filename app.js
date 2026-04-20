@@ -11,7 +11,7 @@ const mainData = {
     {
       id: 1776633369848,
       date: "23:16:09 19/4/2026",
-      name: "123",
+      name: "Order 1",
       ico: "123",
       tel: "123",
       device: "c660",
@@ -22,7 +22,7 @@ const mainData = {
     {
       id: 12,
       date: "23:16:09 19/4/2026",
-      name: "234",
+      name: "Order 2",
       ico: "234",
       tel: "234",
       device: "c660",
@@ -31,8 +31,54 @@ const mainData = {
       comment: "",
     },
   ],
-  borrow: [],
-  repair: [],
+  borrows: [
+    {
+      id: 23,
+      date: "23:16:09 19/4/2026",
+      name: "Borrow 1",
+      ico: "123",
+      tel: "123",
+      device: "c660",
+      status: "paid",
+      location: "g-floor",
+      comment: "",
+    },
+    {
+      id: 28,
+      date: "23:16:09 19/4/2026",
+      name: "Borrow 2",
+      ico: "234",
+      tel: "234",
+      device: "c660",
+      status: "unpaid",
+      location: "g-floor",
+      comment: "",
+    },
+  ],
+  repairs: [
+    {
+      id: 50,
+      date: "23:16:09 19/4/2026",
+      name: "repair 1",
+      ico: "123",
+      tel: "123",
+      device: "c660",
+      status: "paid",
+      location: "g-floor",
+      comment: "",
+    },
+    {
+      id: 59,
+      date: "23:16:09 19/4/2026",
+      name: "repair 2",
+      ico: "234",
+      tel: "234",
+      device: "c660",
+      status: "unpaid",
+      location: "g-floor",
+      comment: "",
+    },
+  ],
 };
 
 // Login Page Listent for Login Btn
@@ -106,10 +152,22 @@ function renderPage(page) {
   main.innerHTML = html;
 }
 
-function getObjDataFromBox(id) {
-  const targetObjectFromOrder = mainData.orders.find((order) => {
-    return order.id === +id;
-  });
+function getObjDataFromBox(id, activePage) {
+  let targetObjectFromOrder;
+  if (activePage === "orders") {
+    targetObjectFromOrder = mainData.orders.find((order) => {
+      return order.id === +id;
+    });
+  } else if (activePage === "borrow-devices") {
+    targetObjectFromOrder = mainData.borrows.find((borrow) => {
+      return borrow.id === +id;
+    });
+  } else if (activePage === "repair-tracking") {
+    targetObjectFromOrder = mainData.repairs.find((repair) => {
+      return repair.id === +id;
+    });
+  }
+
   return targetObjectFromOrder;
 }
 
@@ -208,10 +266,23 @@ function removeForm() {
   overlay.remove();
 }
 
-function renderMainOrders() {
+function renderMainOrders(page) {
   const mainBody = document.querySelector(".main-body");
+  let arrObjects;
 
-  const html = mainData.orders
+  // console.log(mainData);
+
+  if (page === "orders") {
+    arrObjects = mainData.orders;
+  } else if (page === "borrow-devices") {
+    arrObjects = mainData.borrows;
+  } else if (page === "repair-tracking") {
+    arrObjects = mainData.repairs;
+  }
+
+  // console.log(arrObjects);
+
+  const html = arrObjects
     .map((order) => {
       return `
     <div class="main-body-data">
@@ -231,7 +302,11 @@ function renderMainOrders() {
   mainBody.innerHTML = html;
 }
 
-function addMainData() {
+function findActivePage() {
+  return document.querySelector(".active").querySelector(".icon").dataset.page;
+}
+
+function addMainData(page) {
   const name = document.querySelector("#name").value;
   const ico = document.querySelector("#ico").value;
   const tel = document.querySelector("#tel").value;
@@ -259,13 +334,16 @@ function addMainData() {
     return;
   }
 
-  console.log(dataFormValue);
+  // console.log(dataFormValue);
 
   // if data object is not exists
-  mainData.orders.push(dataFormValue);
-
-  const form = document.querySelector(".form");
-  form.remove();
+  if (page === "orders") {
+    mainData.orders.push(dataFormValue);
+  } else if (page === "borrow-devices") {
+    mainData.borrows.push(dataFormValue);
+  } else if (page === "repair-tracking") {
+    mainData.repairs.push(dataFormValue);
+  }
 }
 
 function updateMainData(id) {
@@ -324,29 +402,26 @@ document.body.addEventListener("click", function (e) {
     renderActiveMenuItem(chosenMenuItem);
     const page = e.target.dataset.page;
     renderPage(page);
-    renderMainOrders();
+    renderMainOrders(page);
     return;
   }
   // User choose Borrow menu-item
-
   if (e.target.dataset.page === "borrow-devices") {
     const chosenMenuItem = e.target;
     renderActiveMenuItem(chosenMenuItem);
+
     const page = e.target.dataset.page;
     renderPage(page);
-
-    console.log("borrow page");
+    renderMainOrders(page);
   }
 
   // User choose Repair menu-item
-
   if (e.target.dataset.page === "repair-tracking") {
     const chosenMenuItem = e.target;
     renderActiveMenuItem(chosenMenuItem);
     const page = e.target.dataset.page;
     renderPage(page);
-
-    console.log("repair page");
+    renderMainOrders(page);
   }
 
   // User add Main Object
@@ -366,7 +441,14 @@ document.body.addEventListener("click", function (e) {
   // If Box were selected
   const box = e.target.closest(".box");
   if (box) {
-    const objData = getObjDataFromBox(box.id);
+    // find curr active page
+
+    const activePage = findActivePage();
+    // console.log(activePage);
+
+    //
+
+    const objData = getObjDataFromBox(box.id, activePage);
     renderForm(objData);
     return;
   }
@@ -374,9 +456,10 @@ document.body.addEventListener("click", function (e) {
   const submitBtn = e.target.closest(".submit-btn");
   if (e.target === submitBtn) {
     e.preventDefault();
-    addMainData();
+    const page = findActivePage();
+    addMainData(page);
     removeForm();
-    renderMainOrders();
+    renderMainOrders(page);
     return;
   }
 
