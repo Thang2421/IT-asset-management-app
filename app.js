@@ -9,7 +9,7 @@ const pages = [
 const mainData = {
   orders: [
     {
-      id: 1776633369848,
+      id: 1,
       date: "23:16:09 19/4/2026",
       name: "Order 1",
       ico: "123",
@@ -20,7 +20,7 @@ const mainData = {
       comment: "",
     },
     {
-      id: 12,
+      id: 2,
       date: "23:16:09 19/4/2026",
       name: "Order 2",
       ico: "234",
@@ -33,7 +33,7 @@ const mainData = {
   ],
   borrows: [
     {
-      id: 23,
+      id: 3,
       date: "23:16:09 19/4/2026",
       name: "Borrow 1",
       ico: "123",
@@ -44,7 +44,7 @@ const mainData = {
       comment: "",
     },
     {
-      id: 28,
+      id: 4,
       date: "23:16:09 19/4/2026",
       name: "Borrow 2",
       ico: "234",
@@ -57,7 +57,7 @@ const mainData = {
   ],
   repairs: [
     {
-      id: 50,
+      id: 5,
       date: "23:16:09 19/4/2026",
       name: "repair 1",
       ico: "123",
@@ -68,7 +68,7 @@ const mainData = {
       comment: "",
     },
     {
-      id: 59,
+      id: 6,
       date: "23:16:09 19/4/2026",
       name: "repair 2",
       ico: "234",
@@ -329,7 +329,7 @@ function addMainData(page) {
     comment: comment,
   };
 
-  if (!ico || !device || !status) {
+  if (!dataFormValue.ico || !dataFormValue.device || !dataFormValue.status) {
     alert("Please fill required fields");
     return;
   }
@@ -360,7 +360,7 @@ function updateMainData(id, page) {
     comment: document.querySelector("#comments").value,
   };
 
-  if (!ico || !device || !status) {
+  if (!updatedObjData.ico || !updatedObjData.device || !updatedObjData.status) {
     alert("Please fill required fields");
     return;
   }
