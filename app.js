@@ -346,8 +346,8 @@ function addMainData(page) {
   }
 }
 
-function updateMainData(id) {
-  const objData = getObjDataFromBox(id);
+function updateMainData(id, page) {
+  const objData = getObjDataFromBox(id, page);
   const updatedObjData = {
     id: objData.id,
     date: objData.date,
@@ -360,19 +360,48 @@ function updateMainData(id) {
     comment: document.querySelector("#comments").value,
   };
 
-  const indexData = findIndexFromId(id);
-  mainData.orders[indexData] = updatedObjData;
+  if (!ico || !device || !status) {
+    alert("Please fill required fields");
+    return;
+  }
+
+  const indexData = findIndexFromId(id, page);
+  console.log(indexData);
+
+  if (page === "orders") {
+    mainData.orders[indexData] = updatedObjData;
+  } else if (page === "borrow-devices") {
+    mainData.borrows[indexData] = updatedObjData;
+  } else if (page === "repair-tracking") {
+    mainData.repairs[indexData] = updatedObjData;
+  }
 }
 
-function deleteMainData(id) {
-  const indexData = findIndexFromId(id);
-  mainData.orders.splice(indexData, 1);
+function deleteMainData(id, page) {
+  const indexData = findIndexFromId(id, page);
+  if (page === "orders") {
+    mainData.orders.splice(indexData, 1);
+  } else if (page === "borrow-devices") {
+    mainData.borrows.splice(indexData, 1);
+  } else if (page === "repair-tracking") {
+    mainData.repairs.splice(indexData, 1);
+  }
 }
 
-function findIndexFromId(id) {
-  return mainData.orders.findIndex((order) => {
-    return +order.id == id;
-  });
+function findIndexFromId(id, page) {
+  if (page === "orders") {
+    return mainData.orders.findIndex((order) => {
+      return +order.id == id;
+    });
+  } else if (page === "borrow-devices") {
+    return mainData.borrows.findIndex((order) => {
+      return +order.id == id;
+    });
+  } else if (page === "repair-tracking") {
+    return mainData.repairs.findIndex((order) => {
+      return +order.id == id;
+    });
+  }
 }
 
 function renderMainPageStructure() {
@@ -466,20 +495,23 @@ document.body.addEventListener("click", function (e) {
   const updateBtn = e.target.closest(".update-btn");
   if (e.target === updateBtn) {
     e.preventDefault();
+    const page = findActivePage();
     const id = e.target.closest(".modal-form").dataset.id;
-    updateMainData(id);
+    console.log(id, page);
+    updateMainData(id, page);
     removeForm();
-    renderMainOrders();
+    renderMainOrders(page);
     return;
   }
 
   const finishBtn = e.target.closest(".finish-btn");
   if (e.target === finishBtn) {
     e.preventDefault();
+    const page = findActivePage();
     const id = e.target.closest(".modal-form").dataset.id;
-    deleteMainData(id);
+    deleteMainData(id, page);
     removeForm();
-    renderMainOrders();
+    renderMainOrders(page);
     return;
   }
 });
