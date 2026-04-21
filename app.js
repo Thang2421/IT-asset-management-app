@@ -500,15 +500,9 @@ document.body.addEventListener("click", function (e) {
   // If Box were selected
   const box = e.target.closest(".box");
   if (box) {
-    // find curr active page
-
     const activePage = findActivePage();
-    // console.log(activePage);
-
-    //
-
     const objData = getObjDataFromBox(box.id, activePage);
-    renderForm(objData, activePage);
+    renderForm(objData);
     return;
   }
 
