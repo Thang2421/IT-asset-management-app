@@ -148,6 +148,15 @@ function renderPage(page) {
     <div class="main-body"></div>
 
     `;
+  } else if (page === "invoice") {
+    html = `
+    <div class='main-header'>
+        <h1 class='page-header'>Invoice Generator</h1>
+
+    </div>
+    <div class="main-body"></div>
+
+    `;
   }
   main.innerHTML = html;
 }
@@ -171,7 +180,8 @@ function getObjDataFromBox(id, activePage) {
   return targetObjectFromOrder;
 }
 
-function renderForm(obj) {
+function renderForm(obj, activePage) {
+  console.log(activePage);
   const formhtml = `
     <div class="overlay ">
 
@@ -268,9 +278,18 @@ function removeForm() {
 
 function renderMainOrders(page) {
   const mainBody = document.querySelector(".main-body");
-  let arrObjects;
 
-  // console.log(mainData);
+  let arrObjects;
+  if (page === "invoice") {
+    const html = `
+    <div class="main-body-invoice">
+      <div class="ivoice-item renewal-item">Renewal invoice</div>
+      <div class="ivoice-item purchasing-item">Purchasing invoice</div>
+    </div>
+    `;
+    mainBody.innerHTML = html;
+    return;
+  }
 
   if (page === "orders") {
     arrObjects = mainData.orders;
@@ -442,6 +461,7 @@ document.body.addEventListener("click", function (e) {
     const page = e.target.dataset.page;
     renderPage(page);
     renderMainOrders(page);
+    return;
   }
 
   // User choose Repair menu-item
@@ -451,6 +471,17 @@ document.body.addEventListener("click", function (e) {
     const page = e.target.dataset.page;
     renderPage(page);
     renderMainOrders(page);
+    return;
+  }
+
+  // User choose Invoice menu-item
+  if (e.target.dataset.page === "invoice") {
+    const chosenMenuItem = e.target;
+    renderActiveMenuItem(chosenMenuItem);
+    const page = e.target.dataset.page;
+    renderPage(page);
+    renderMainOrders(page);
+    return;
   }
 
   // User add Main Object
@@ -478,7 +509,7 @@ document.body.addEventListener("click", function (e) {
     //
 
     const objData = getObjDataFromBox(box.id, activePage);
-    renderForm(objData);
+    renderForm(objData, activePage);
     return;
   }
 
@@ -513,5 +544,15 @@ document.body.addEventListener("click", function (e) {
     removeForm();
     renderMainOrders(page);
     return;
+  }
+
+  const renewalBtn = e.target.closest(".renewal-item");
+  if (e.target === renewalBtn) {
+    console.log(1);
+  }
+
+  const purchasingBtn = e.target.closest(".purchasing-item");
+  if (e.target === purchasingBtn) {
+    console.log(2);
   }
 });

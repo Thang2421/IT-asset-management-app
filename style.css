@@ -190,6 +190,24 @@ button {
   justify-content: center;
 }
 
+.main-body-invoice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  gap: 100px;
+  height: 400px;
+}
+
+.ivoice-item {
+  border: solid black;
+  font-size: 40px;
+  border-radius: 20px;
+  padding: 25px;
+  background-color: #d9d9d9;
+}
+
 .hidden {
   display: none;
 }
