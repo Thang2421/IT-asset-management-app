@@ -180,8 +180,7 @@ function getObjDataFromBox(id, activePage) {
   return targetObjectFromOrder;
 }
 
-function renderForm(obj, activePage) {
-  console.log(activePage);
+function renderForm(obj) {
   const formhtml = `
     <div class="overlay ">
 
