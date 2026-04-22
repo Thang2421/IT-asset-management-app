@@ -153,6 +153,7 @@ button {
 /* form */
 
 .form {
+  border: solid black;
   position: fixed;
   display: grid;
   grid-template-rows: 100px auto;
@@ -160,7 +161,6 @@ button {
   height: auto;
   top: 25%;
   left: 25%;
-  border-style: dotted;
   border-radius: 10px;
 }
 
@@ -210,4 +210,33 @@ button {
 
 .hidden {
   display: none;
+}
+
+/* for print A4 form*/
+
+#a4-page {
+  width: 210mm;
+  padding: 20mm;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+@media print {
+  /* body {
+    margin: 0;
+  } */
+
+  #a4-page {
+    box-shadow: none;
+    margin: 0;
+  }
+}
+
+/* Style thêm */
+.a4FormHeader {
+  text-align: center;
+}
+
+.a4FormDate {
+  margin-top: 40px;
 }

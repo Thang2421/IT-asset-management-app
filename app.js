@@ -270,6 +270,55 @@ function renderForm(obj) {
   document.body.insertAdjacentHTML("afterbegin", formhtml);
 }
 
+function renderFormInvoice() {
+  const formhtml = `
+    <div class="overlay ">
+
+    <div class="form ">
+      <!-- TOP -->
+      
+      <!-- MIDDLE -->
+      <div class="form-body">
+        <form class="modal-form" >
+          <div class="modal-form-body">
+            <div class="modal-form-body-left">
+              <div> Staff Info</div>
+              <div class="form-group">
+                <label for="staff">Select Staff</label>
+                <select id="staff">
+                  <option value=''>Select Staff</option>
+                  <option value="Milan" >Milan</option>
+                  <option value="Khai" >Khai</option>
+                  <option value="Dat" >Dat</option>
+                  <option value="Thang" >Thang</option>
+                  <option value="Khanh" >Khanh</option>
+                  <option value="Trang" >Trang</option>
+                  <option value="Hieu" >Hieu</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-form-body-right">
+              <div> Customer Info</div>
+              <div class="form-group">
+                <label for="ico">ICO</label>
+                <input id="ico" type="text" '/>
+              </div>
+                 <div class="form-group">
+                <label for="amount">Amount</label>
+                <input id="amount" type="number" '/>
+              </div>
+              
+            </div>
+          </div>
+          <div class="modal-form-submit">
+            <button class="form-btn generate-btn" type="submit">Generate</button>
+          </div>
+        </form>
+        </div>`;
+
+  document.body.insertAdjacentHTML("afterbegin", formhtml);
+}
+
 function removeForm() {
   const overlay = document.querySelector(".overlay");
   overlay.remove();
@@ -318,6 +367,48 @@ function renderMainOrders(page) {
     .join(" ");
 
   mainBody.innerHTML = html;
+}
+
+function renderAndPrintA4(dataForInvoice) {
+  document.querySelector(".app").classList.add("hidden");
+
+  const html = ` <div id="a4-page">
+      <h1 class='a4FormHeader'>Payment confirmation Letter</h1>
+
+      <p class="a4FormDate" id="date">${
+        new Date().toLocaleString("cz-CZ").slice(9) +
+        " " +
+        new Date().toLocaleString("cz-CZ").slice(0, 9)
+      }</p>
+
+      <p>Dear customer ico <span id="ico">${dataForInvoice.icoValue}</span>,</p>
+
+      <p>
+        We hereby confirm that <span id="staff">${dataForInvoice.staffValue}</span> Gokasa received your
+        payment of <span id="amount"></span> CZK for the warranty extension for
+        the software of ico <span id="ico2">${dataForInvoice.icoValue}</span>. The amount of ${dataForInvoice.amountValue}CZK was received in
+        its entirety on <span id="date2"></span>.
+      </p>
+
+      <p>
+        We want to thank you for the payment, and we look forward to
+        collaborating with you in the future.
+      </p>
+
+      <p>
+        Should you need additional information, please contact us at +420 775
+        811 123 or support@gokasa.cz
+      </p>
+
+      <p>Regards,</p>
+      <p>Gokasa team.</p>
+    </div>
+`;
+  document.body.insertAdjacentHTML("beforeend", html);
+  window.print();
+
+  document.querySelector("#a4-page").remove();
+  document.querySelector(".app").classList.remove("hidden");
 }
 
 function findActivePage() {
@@ -420,6 +511,19 @@ function findIndexFromId(id, page) {
       return +order.id == id;
     });
   }
+}
+
+function getStaffAndIco() {
+  const dataValue = {
+    icoValue: document.querySelector("#ico").value,
+    staffValue: document.querySelector("#staff").value,
+    amountValue: document.querySelector("#amount").value,
+  };
+  if (!dataValue.icoValue || !dataValue.staffValue || !dataValue.amountValue) {
+    alert("Please fill all required ifo");
+    return;
+  }
+  return dataValue;
 }
 
 function renderMainPageStructure() {
@@ -541,11 +645,19 @@ document.body.addEventListener("click", function (e) {
 
   const renewalBtn = e.target.closest(".renewal-item");
   if (e.target === renewalBtn) {
-    console.log(1);
+    renderFormInvoice();
   }
 
   const purchasingBtn = e.target.closest(".purchasing-item");
   if (e.target === purchasingBtn) {
-    console.log(2);
+  }
+
+  const generateInvoice = document.querySelector(".generate-btn");
+  if (e.target === generateInvoice) {
+    e.preventDefault();
+    const dataForInvoice = getStaffAndIco();
+    if (!dataForInvoice) return;
+    removeForm();
+    renderAndPrintA4(dataForInvoice);
   }
 });
