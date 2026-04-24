@@ -1,10 +1,4 @@
-const pages = [
-  "price-list",
-  "orders",
-  "borrow-devices",
-  "repair-tracking",
-  "invoice",
-];
+const pages = ["orders", "borrow-devices", "repair-tracking", "invoice"];
 
 const mainData = {
   orders: [
@@ -21,6 +15,94 @@ const mainData = {
     },
     {
       id: 2,
+      date: "23:16:09 19/4/2026",
+      name: "Order 2",
+      ico: "234",
+      tel: "234",
+      device: "c660",
+      status: "unpaid",
+      location: "g-floor",
+      comment: "",
+    },
+    {
+      id: 3,
+      date: "23:16:09 19/4/2026",
+      name: "Order 1",
+      ico: "123",
+      tel: "123",
+      device: "c660",
+      status: "paid",
+      location: "g-floor",
+      comment: "",
+    },
+    {
+      id: 4,
+      date: "23:16:09 19/4/2026",
+      name: "Order 2",
+      ico: "234",
+      tel: "234",
+      device: "c660",
+      status: "unpaid",
+      location: "g-floor",
+      comment: "",
+    },
+    {
+      id: 5,
+      date: "23:16:09 19/4/2026",
+      name: "Order 1",
+      ico: "123",
+      tel: "123",
+      device: "c660",
+      status: "paid",
+      location: "g-floor",
+      comment: "",
+    },
+    {
+      id: 6,
+      date: "23:16:09 19/4/2026",
+      name: "Order 2",
+      ico: "234",
+      tel: "234",
+      device: "c660",
+      status: "unpaid",
+      location: "g-floor",
+      comment: "",
+    },
+    {
+      id: 7,
+      date: "23:16:09 19/4/2026",
+      name: "Order 1",
+      ico: "123",
+      tel: "123",
+      device: "c660",
+      status: "paid",
+      location: "g-floor",
+      comment: "",
+    },
+    {
+      id: 8,
+      date: "23:16:09 19/4/2026",
+      name: "Order 2",
+      ico: "234",
+      tel: "234",
+      device: "c660",
+      status: "unpaid",
+      location: "g-floor",
+      comment: "",
+    },
+    {
+      id: 9,
+      date: "23:16:09 19/4/2026",
+      name: "Order 1",
+      ico: "123",
+      tel: "123",
+      device: "c660",
+      status: "paid",
+      location: "g-floor",
+      comment: "",
+    },
+    {
+      id: 10,
       date: "23:16:09 19/4/2026",
       name: "Order 2",
       ico: "234",
@@ -91,7 +173,7 @@ const mainData = {
 
 // Sidebar Rendering
 const renderSidebar = () => {
-  const sideBar = document.querySelector(".sidebar");
+  const sideBar = document.querySelector(".sidebarel");
   const html = pages
     .map((page) => {
       return `
@@ -529,7 +611,9 @@ function getStaffAndIco() {
 function renderMainPageStructure() {
   const mainPageHtml = `
     <div class="app">
-      <div class="sidebar"></div>
+      <div class="sidebar">
+        <div class='sidebarel'></div>
+      </div>
       <div class="main"></div>
     </div>`;
 
