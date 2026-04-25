@@ -233,7 +233,7 @@ function renderPage(page) {
   } else if (page === "invoice") {
     html = `
     <div class='main-header'>
-        <h1 class='page-header'>Invoice Generator</h1>
+        <h1 class='page-header'>Payment Confirmation</h1>
 
     </div>
     <div class="main-body"></div>
@@ -352,19 +352,22 @@ function renderForm(obj) {
   document.body.insertAdjacentHTML("afterbegin", formhtml);
 }
 
-function renderFormInvoice() {
+function renderFormInvoice(typeOfConfirmaiton) {
   const formhtml = `
     <div class="overlay ">
 
-    <div class="form ">
+    <div class="form " id="${typeOfConfirmaiton}-form">
       <!-- TOP -->
+     <div class='form-top'>
+       <h1>${typeOfConfirmaiton.charAt(0).toUpperCase() + typeOfConfirmaiton.slice(1)} Confirmation Generator</h1>
+      </div>
       
       <!-- MIDDLE -->
       <div class="form-body">
         <form class="modal-form" >
           <div class="modal-form-body">
             <div class="modal-form-body-left">
-              <div> Staff Info</div>
+              <div class='modal-form-body-header'> Staff Info</div>
               <div class="form-group">
                 <label for="staff">Select Staff</label>
                 <select id="staff">
@@ -380,7 +383,7 @@ function renderFormInvoice() {
               </div>
             </div>
             <div class="modal-form-body-right">
-              <div> Customer Info</div>
+              <div  class='modal-form-body-header'> Customer Info</div>
               <div class="form-group">
                 <label for="ico">ICO</label>
                 <input id="ico" type="text" '/>
@@ -413,8 +416,8 @@ function renderMainOrders(page) {
   if (page === "invoice") {
     const html = `
     <div class="main-body-invoice">
-      <div class="ivoice-item renewal-item">Renewal invoice</div>
-      <div class="ivoice-item purchasing-item">Purchasing invoice</div>
+      <div class="ivoice-item renewal-item" id="renewal-btn">Renewal Confirmation</div>
+      <div class="ivoice-item purchasing-item" id="purchasing-btn">Purchasing Confirmation</div>
     </div>
     `;
     mainBody.innerHTML = html;
@@ -451,8 +454,10 @@ function renderMainOrders(page) {
   mainBody.innerHTML = html;
 }
 
-function renderAndPrintA4(dataForInvoice) {
+function renderAndPrintA4(dataForInvoice, typeOfInvoice) {
   document.querySelector(".app").classList.add("hidden");
+
+  console.log(typeOfInvoice);
 
   const html = ` <div id="a4-page">
       <h1 class='a4FormHeader'>Payment confirmation Letter</h1>
@@ -467,14 +472,18 @@ function renderAndPrintA4(dataForInvoice) {
 
       <p>
         We hereby confirm that <span id="staff">${dataForInvoice.staffValue}</span> Gokasa received your
-        payment of <span id="amount"></span> CZK for the warranty extension for
-        the software of ico <span id="ico2">${dataForInvoice.icoValue}</span>. The amount of ${dataForInvoice.amountValue}CZK was received in
-        its entirety on <span id="date2"></span>.
+        payment of <span id="amount"></span> CZK for the ${typeOfInvoice === "renewal" ? "the warranty extension for the software" : typeOfInvoice === "purchasing" ? "the purchasing of hardware" : ""}
+        of ico <span id="ico2">${dataForInvoice.icoValue}</span>. The amount of ${dataForInvoice.amountValue}CZK was received in
+        its entirety on <span id="date2">${new Date().toLocaleString("cz-CZ").slice(9)}</span>.
       </p>
+
 
       <p>
         We want to thank you for the payment, and we look forward to
         collaborating with you in the future.
+
+        
+
       </p>
 
       <p>
@@ -729,19 +738,24 @@ document.body.addEventListener("click", function (e) {
 
   const renewalBtn = e.target.closest(".renewal-item");
   if (e.target === renewalBtn) {
-    renderFormInvoice();
+    const typeOfConfirmaiton = e.target.id.replace("-btn", "");
+    renderFormInvoice(typeOfConfirmaiton);
   }
 
   const purchasingBtn = e.target.closest(".purchasing-item");
   if (e.target === purchasingBtn) {
+    const typeOfConfirmaiton = e.target.id.replace("-btn", "");
+    renderFormInvoice(typeOfConfirmaiton);
   }
 
   const generateInvoice = document.querySelector(".generate-btn");
   if (e.target === generateInvoice) {
     e.preventDefault();
+
+    const typeOfInvoice = e.target.closest(".form").id.replace("-form", "");
     const dataForInvoice = getStaffAndIco();
     if (!dataForInvoice) return;
     removeForm();
-    renderAndPrintA4(dataForInvoice);
+    renderAndPrintA4(dataForInvoice, typeOfInvoice);
   }
 });

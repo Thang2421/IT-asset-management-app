@@ -154,6 +154,7 @@ button {
 
 .page-header {
   text-align: center;
+  font-size: 60px;
 }
 
 .add-btn-container {
@@ -182,11 +183,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 40px;
-}
-
-.form-body {
-  /* background-color: yellow; */
+  font-size: 30px;
 }
 
 .modal-form-body {
@@ -198,12 +195,15 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 400px;
 }
 .modal-form {
   height: 550px;
   display: grid;
   grid-template-rows: 430px 120px;
+}
+.modal-form-body-header {
+  font-size: 40px;
+  font-weight: bold;
 }
 
 .btn-container {
