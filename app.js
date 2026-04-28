@@ -1,166 +1,9 @@
 const pages = ["orders", "borrow-devices", "repair-tracking", "invoice"];
 
 const mainData = {
-  orders: [
-    {
-      id: 1,
-      date: "23:16:09 19/4/2026",
-      name: "Order 1",
-      ico: "123",
-      tel: "123",
-      device: "c660",
-      status: "paid",
-      location: "g-floor",
-      comment: "",
-    },
-    {
-      id: 2,
-      date: "23:16:09 19/4/2026",
-      name: "Order 2",
-      ico: "234",
-      tel: "234",
-      device: "c660",
-      status: "unpaid",
-      location: "g-floor",
-      comment: "",
-    },
-    {
-      id: 3,
-      date: "23:16:09 19/4/2026",
-      name: "Order 1",
-      ico: "123",
-      tel: "123",
-      device: "c660",
-      status: "paid",
-      location: "g-floor",
-      comment: "",
-    },
-    {
-      id: 4,
-      date: "23:16:09 19/4/2026",
-      name: "Order 2",
-      ico: "234",
-      tel: "234",
-      device: "c660",
-      status: "unpaid",
-      location: "g-floor",
-      comment: "",
-    },
-    {
-      id: 5,
-      date: "23:16:09 19/4/2026",
-      name: "Order 1",
-      ico: "123",
-      tel: "123",
-      device: "c660",
-      status: "paid",
-      location: "g-floor",
-      comment: "",
-    },
-    {
-      id: 6,
-      date: "23:16:09 19/4/2026",
-      name: "Order 2",
-      ico: "234",
-      tel: "234",
-      device: "c660",
-      status: "unpaid",
-      location: "g-floor",
-      comment: "",
-    },
-    {
-      id: 7,
-      date: "23:16:09 19/4/2026",
-      name: "Order 1",
-      ico: "123",
-      tel: "123",
-      device: "c660",
-      status: "paid",
-      location: "g-floor",
-      comment: "",
-    },
-    {
-      id: 8,
-      date: "23:16:09 19/4/2026",
-      name: "Order 2",
-      ico: "234",
-      tel: "234",
-      device: "c660",
-      status: "unpaid",
-      location: "g-floor",
-      comment: "",
-    },
-    {
-      id: 9,
-      date: "23:16:09 19/4/2026",
-      name: "Order 1",
-      ico: "123",
-      tel: "123",
-      device: "c660",
-      status: "paid",
-      location: "g-floor",
-      comment: "",
-    },
-    {
-      id: 10,
-      date: "23:16:09 19/4/2026",
-      name: "Order 2",
-      ico: "234",
-      tel: "234",
-      device: "c660",
-      status: "unpaid",
-      location: "g-floor",
-      comment: "",
-    },
-  ],
-  borrows: [
-    {
-      id: 3,
-      date: "23:16:09 19/4/2026",
-      name: "Borrow 1",
-      ico: "123",
-      tel: "123",
-      device: "c660",
-      status: "paid",
-      location: "g-floor",
-      comment: "",
-    },
-    {
-      id: 4,
-      date: "23:16:09 19/4/2026",
-      name: "Borrow 2",
-      ico: "234",
-      tel: "234",
-      device: "c660",
-      status: "unpaid",
-      location: "g-floor",
-      comment: "",
-    },
-  ],
-  repairs: [
-    {
-      id: 5,
-      date: "23:16:09 19/4/2026",
-      name: "repair 1",
-      ico: "123",
-      tel: "123",
-      device: "c660",
-      status: "paid",
-      location: "g-floor",
-      comment: "",
-    },
-    {
-      id: 6,
-      date: "23:16:09 19/4/2026",
-      name: "repair 2",
-      ico: "234",
-      tel: "234",
-      device: "c660",
-      status: "unpaid",
-      location: "g-floor",
-      comment: "",
-    },
-  ],
+  orders: [],
+  borrows: [],
+  repairs: [],
 };
 
 // Login Page Listent for Login Btn
@@ -262,14 +105,15 @@ function getObjDataFromBox(id, activePage) {
   return targetObjectFromOrder;
 }
 
-function renderForm(obj) {
+function renderForm(obj, activePage) {
+  console.log(activePage);
   const formhtml = `
     <div class="overlay ">
 
     <div class="form ">
       <!-- TOP -->
       <div class="form-top">
-      ${obj?.id ? `<h1>Update Order Info</h1>` : `<h1>New Order Info</h1>`}
+      ${obj?.id ? `${activePage === "orders" ? `<h1>Update Order Info</h1>` : activePage === `borrow-devices` ? `<h1>Update Borrow Device Info</h1>` : activePage === "repair-tracking" ? `<h1>Update Repair Device Info</h1>` : ``}` : `${activePage === "orders" ? `<h1>New Order Info</h1>` : activePage === `borrow-devices` ? `<h1>New Borrow Device Info</h1>` : activePage === "repair-tracking" ? `<h1>New Repair Device Info</h1>` : ``}`}
       </div>
       <!-- MIDDLE -->
       <div class="form-body">
@@ -295,12 +139,12 @@ function renderForm(obj) {
 
                 <label>
                   <input type="radio" name="order_status" value="paid" ${obj?.status === "paid" ? "checked" : ""} />
-                  PAID
+                  ${activePage === "orders" ? `PAID` : activePage === `borrow-devices` ? `BORROWED` : activePage === `repair-tracking` ? `REPAIRING` : ``}
                 </label>
 
                 <label>
                   <input type="radio" name="order_status" value="unpaid" ${obj?.status === "unpaid" ? "checked" : ""} />
-                  UNPAID
+                  ${activePage === "orders" ? `UNPAID` : activePage === `borrow-devices` ? `UNBORROWED` : activePage === `repair-tracking` ? `REPAIRED` : ``}
                 </label>
               </div>
             </div>
@@ -683,7 +527,10 @@ document.body.addEventListener("click", function (e) {
   // User add Main Object
   const addBtn = document.querySelector(".add-btn-img");
   if (e.target === addBtn) {
-    renderForm();
+    const activePage = findActivePage();
+
+    renderForm(undefined, activePage);
+
     return;
   }
 
@@ -699,7 +546,8 @@ document.body.addEventListener("click", function (e) {
   if (box) {
     const activePage = findActivePage();
     const objData = getObjDataFromBox(box.id, activePage);
-    renderForm(objData);
+    renderForm(objData, activePage);
+
     return;
   }
 
