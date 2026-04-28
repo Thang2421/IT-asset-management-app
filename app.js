@@ -1,6 +1,6 @@
 const pages = ["orders", "borrow-devices", "repair-tracking", "invoice"];
 
-const mainData = {
+let mainData = {
   orders: [],
   borrows: [],
   repairs: [],
@@ -106,7 +106,6 @@ function getObjDataFromBox(id, activePage) {
 }
 
 function renderForm(obj, activePage) {
-  console.log(activePage);
   const formhtml = `
     <div class="overlay ">
 
@@ -301,8 +300,6 @@ function renderMainOrders(page) {
 function renderAndPrintA4(dataForInvoice, typeOfInvoice) {
   document.querySelector(".app").classList.add("hidden");
 
-  console.log(typeOfInvoice);
-
   const html = ` <div id="a4-page">
       <h1 class='a4FormHeader'>Payment confirmation Letter</h1>
 
@@ -378,8 +375,6 @@ function addMainData(page) {
     return;
   }
 
-  // console.log(dataFormValue);
-
   // if data object is not exists
   if (page === "orders") {
     mainData.orders.push(dataFormValue);
@@ -388,6 +383,8 @@ function addMainData(page) {
   } else if (page === "repair-tracking") {
     mainData.repairs.push(dataFormValue);
   }
+  console.log(mainData);
+  localStorage.setItem("mainData", JSON.stringify(mainData));
 }
 
 function updateMainData(id, page) {
@@ -419,6 +416,7 @@ function updateMainData(id, page) {
   } else if (page === "repair-tracking") {
     mainData.repairs[indexData] = updatedObjData;
   }
+  localStorage.setItem("mainData", JSON.stringify(mainData));
 }
 
 function deleteMainData(id, page) {
@@ -430,6 +428,7 @@ function deleteMainData(id, page) {
   } else if (page === "repair-tracking") {
     mainData.repairs.splice(indexData, 1);
   }
+  localStorage.setItem("mainData", JSON.stringify(mainData));
 }
 
 function findIndexFromId(id, page) {
@@ -481,41 +480,17 @@ document.body.addEventListener("click", function (e) {
     loginPage.remove();
     renderMainPageStructure();
     renderSidebar();
+    mainData = JSON.parse(localStorage.getItem("mainData"));
     return;
   }
 
   // User choose Orders menu-item
-  if (e.target.dataset.page === "orders") {
-    const chosenMenuItem = e.target;
-    renderActiveMenuItem(chosenMenuItem);
-    const page = e.target.dataset.page;
-    renderPage(page);
-    renderMainOrders(page);
-    return;
-  }
-  // User choose Borrow menu-item
-  if (e.target.dataset.page === "borrow-devices") {
-    const chosenMenuItem = e.target;
-    renderActiveMenuItem(chosenMenuItem);
-
-    const page = e.target.dataset.page;
-    renderPage(page);
-    renderMainOrders(page);
-    return;
-  }
-
-  // User choose Repair menu-item
-  if (e.target.dataset.page === "repair-tracking") {
-    const chosenMenuItem = e.target;
-    renderActiveMenuItem(chosenMenuItem);
-    const page = e.target.dataset.page;
-    renderPage(page);
-    renderMainOrders(page);
-    return;
-  }
-
-  // User choose Invoice menu-item
-  if (e.target.dataset.page === "invoice") {
+  if (
+    e.target.dataset.page === "orders" ||
+    e.target.dataset.page === "borrow-devices" ||
+    e.target.dataset.page === "repair-tracking" ||
+    e.target.dataset.page === "invoice"
+  ) {
     const chosenMenuItem = e.target;
     renderActiveMenuItem(chosenMenuItem);
     const page = e.target.dataset.page;
@@ -528,9 +503,7 @@ document.body.addEventListener("click", function (e) {
   const addBtn = document.querySelector(".add-btn-img");
   if (e.target === addBtn) {
     const activePage = findActivePage();
-
     renderForm(undefined, activePage);
-
     return;
   }
 
@@ -547,7 +520,6 @@ document.body.addEventListener("click", function (e) {
     const activePage = findActivePage();
     const objData = getObjDataFromBox(box.id, activePage);
     renderForm(objData, activePage);
-
     return;
   }
 
@@ -566,7 +538,6 @@ document.body.addEventListener("click", function (e) {
     e.preventDefault();
     const page = findActivePage();
     const id = e.target.closest(".modal-form").dataset.id;
-    console.log(id, page);
     updateMainData(id, page);
     removeForm();
     renderMainOrders(page);
@@ -585,13 +556,9 @@ document.body.addEventListener("click", function (e) {
   }
 
   const renewalBtn = e.target.closest(".renewal-item");
-  if (e.target === renewalBtn) {
-    const typeOfConfirmaiton = e.target.id.replace("-btn", "");
-    renderFormInvoice(typeOfConfirmaiton);
-  }
-
   const purchasingBtn = e.target.closest(".purchasing-item");
-  if (e.target === purchasingBtn) {
+
+  if (e.target === renewalBtn || e.target === purchasingBtn) {
     const typeOfConfirmaiton = e.target.id.replace("-btn", "");
     renderFormInvoice(typeOfConfirmaiton);
   }
