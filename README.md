@@ -4,36 +4,31 @@
 
 Devices management App:
 
-- Price list
+- Ordered devices
 - Borrowed devices
 - Devices under repair
+- Payment Confirmation Generator
 
 ## 🎯 Features
 
-### 1. Product Price Management
-
-- Quickly check product prices without opening Excel files
-- Add / Edit / Delete products
-- Update prices when changes occur
-
-### 2. Customer Orders (Reserved / Paid Devices)
+### 1. Customer Orders (Reserved / Paid Devices)
 
 - Track devices prepared for customers
 - Store order details (items, total price, payment status)
 - Avoid missing or mixing up customer orders
 
-### 3. Borrowed Device Management
+### 2. Borrowed Device Management
 
 - Track which customer borrowed which device
 - Add / Delete borrowed items
 - Avoid losing track of company assets
 
-### 4. Repair & Warranty Tracking
+### 3. Repair & Warranty Tracking
 
 - Manage devices under repair or warranty
 - Track status and issues of each device
 
-### 5. Invoice Generation
+### 4. Invoice Generation
 
 - Generate printable A4 invoices
 - Support payment receipts and warranty extensions
@@ -46,7 +41,7 @@ Devices management App:
 
 ## 🚀 Deployment
 
-(deploy Link)
+Deploy Link: https://it-asset-management-5igaifvt9-thangdd4241-4079s-projects.vercel.app/
 
 ## UI Design
 
