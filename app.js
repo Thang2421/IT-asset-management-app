@@ -1,7 +1,30 @@
 const pages = ["orders", "borrow-devices", "repair-tracking", "invoice"];
 
 let mainData = {
-  orders: [],
+  orders: [
+    {
+      id: 1777450524219,
+      date: "10:15:24 29/4/2026",
+      name: "123",
+      ico: "123",
+      tel: "123",
+      device: "p70-1",
+      status: "paid",
+      location: "",
+      comment: "",
+    },
+    {
+      id: 1777450594361,
+      date: "10:16:34 29/4/2026",
+      name: "123",
+      ico: "123",
+      tel: "123",
+      device: "p70-1",
+      status: "paid",
+      location: "",
+      comment: "",
+    },
+  ],
   borrows: [],
   repairs: [],
 };
@@ -21,7 +44,7 @@ const renderSidebar = () => {
     .map((page) => {
       return `
         <div class="menu-item ">
-        <img class="icon" data-page='${page}' src="IMG/menu-items/${page}.png" />
+        <img class="icon" data-page='${page}' src="IMG/menu-items/${page}.png" title="${page}"/>
         </div>`;
     })
     .join("");
@@ -125,8 +148,8 @@ function renderForm(obj, activePage) {
               </div>
 
               <div class="form-group">
-                <label for="ico">ICO</label>
-                <input id="ico" type="text" value='${obj?.ico || ""}'/>
+                <label for="ico" >ICO*</label>
+                <input id="ico" type="text"  value='${obj?.ico || ""}'/>
               </div>
 
               <div class="form-group">
@@ -134,7 +157,7 @@ function renderForm(obj, activePage) {
                 <input id="tel" type="number" value='${obj?.tel || ""}'/>
               </div>
               <div class="form-group">
-                <label>Status</label>
+                <label>Status*</label>
 
                 <label>
                   <input type="radio" name="order_status" value="paid" ${obj?.status === "paid" ? "checked" : ""} />
@@ -149,7 +172,7 @@ function renderForm(obj, activePage) {
             </div>
             <div class="modal-form-body-right">
               <div class="form-group">
-                <label for="device">Device</label>
+                <label for="device">Device*</label>
                 <select id="device">
                   <option value="">Select device</option>
                   <option value="c660" ${obj?.device === "c660" ? "selected" : ""}>C660</option>
@@ -269,6 +292,7 @@ function renderMainOrders(page) {
 
   if (page === "orders") {
     arrObjects = mainData.orders;
+    console.log(mainData.orders);
   } else if (page === "borrow-devices") {
     arrObjects = mainData.borrows;
   } else if (page === "repair-tracking") {
@@ -289,7 +313,7 @@ function renderMainOrders(page) {
                 <h1>Tel: ${order.tel}</h1>
             </div>
         </div>
-        <h2>Created on: ${order.date.slice(9)}</h2>
+        <h2>Created on: ${order.date.slice(0, 9)}</h2>
     </div>`;
     })
     .join(" ");
@@ -303,11 +327,9 @@ function renderAndPrintA4(dataForInvoice, typeOfInvoice) {
   const html = ` <div id="a4-page">
       <h1 class='a4FormHeader'>Payment confirmation Letter</h1>
 
-      <p class="a4FormDate" id="date">${
-        new Date().toLocaleString("cz-CZ").slice(9) +
-        " " +
-        new Date().toLocaleString("cz-CZ").slice(0, 9)
-      }</p>
+      <p class="a4FormDate" id="date">${new Date()
+        .toLocaleString("en-US")
+        .slice(0, 9)}</p>
 
       <p>Dear customer ico <span id="ico">${dataForInvoice.icoValue}</span>,</p>
 
@@ -315,7 +337,7 @@ function renderAndPrintA4(dataForInvoice, typeOfInvoice) {
         We hereby confirm that <span id="staff">${dataForInvoice.staffValue}</span> Gokasa received your
         payment of <span id="amount"></span> CZK for the ${typeOfInvoice === "renewal" ? "the warranty extension for the software" : typeOfInvoice === "purchasing" ? "the purchasing of hardware" : ""}
         of ico <span id="ico2">${dataForInvoice.icoValue}</span>. The amount of ${dataForInvoice.amountValue}CZK was received in
-        its entirety on <span id="date2">${new Date().toLocaleString("cz-CZ").slice(9)}</span>.
+        its entirety on <span id="date2">${new Date().toLocaleString("en-US").slice(0, 9)}</span>.
       </p>
 
 
@@ -360,7 +382,7 @@ function addMainData(page) {
 
   const dataFormValue = {
     id: Date.now(),
-    date: new Date().toLocaleString("cz-CZ"),
+    date: new Date().toLocaleString("en-US"),
     name: name,
     ico: ico,
     tel: tel,
@@ -384,7 +406,7 @@ function addMainData(page) {
     mainData.repairs.push(dataFormValue);
   }
   console.log(mainData);
-  localStorage.setItem("mainData", JSON.stringify(mainData));
+  saveData();
 }
 
 function updateMainData(id, page) {
@@ -416,7 +438,7 @@ function updateMainData(id, page) {
   } else if (page === "repair-tracking") {
     mainData.repairs[indexData] = updatedObjData;
   }
-  localStorage.setItem("mainData", JSON.stringify(mainData));
+  saveData();
 }
 
 function deleteMainData(id, page) {
@@ -428,7 +450,7 @@ function deleteMainData(id, page) {
   } else if (page === "repair-tracking") {
     mainData.repairs.splice(indexData, 1);
   }
-  localStorage.setItem("mainData", JSON.stringify(mainData));
+  saveData();
 }
 
 function findIndexFromId(id, page) {
@@ -472,6 +494,15 @@ function renderMainPageStructure() {
   document.body.innerHTML = mainPageHtml;
 }
 
+function loadData() {
+  const data = JSON.parse(localStorage.getItem("mainData"));
+  if (data) mainData = data;
+}
+
+function saveData() {
+  localStorage.setItem("mainData", JSON.stringify(mainData));
+}
+
 document.body.addEventListener("click", function (e) {
   // User Login
   const loginBtn = document.querySelector(".login-btn");
@@ -480,7 +511,7 @@ document.body.addEventListener("click", function (e) {
     loginPage.remove();
     renderMainPageStructure();
     renderSidebar();
-    mainData = JSON.parse(localStorage.getItem("mainData"));
+    loadData();
     return;
   }
 
@@ -525,6 +556,7 @@ document.body.addEventListener("click", function (e) {
 
   const submitBtn = e.target.closest(".submit-btn");
   if (e.target === submitBtn) {
+    console.log(1);
     e.preventDefault();
     const page = findActivePage();
     addMainData(page);
